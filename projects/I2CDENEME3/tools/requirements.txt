@@ -1,0 +1,3 @@
+# STM32 bootloader host flasher (UART, MD5, .hex/.bin)
+pyserial>=3.5
+intelhex>=2.3.0
