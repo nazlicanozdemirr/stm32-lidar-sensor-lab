@@ -10,8 +10,8 @@ düzenli bir deney arşivinde toplar.
   birleştiren kapsamlı STM32CubeIDE projesi.
 - `projects/TF02PRO1/`: TF02-Pro deney projesi.
 - `projects/TFMINIPLUS1/`: TFmini Plus deney projesi.
-- `projects/ilk/`, `sensordeneme2/`, `sensordeneme3/`: önceki geliştirme ve
-  sensör bağlantı denemeleri.
+- `projects/I2CDENEME2/`, `ilk/`, `sensordeneme/`, `sensordeneme2/` ve
+  `sensordeneme3/`: önceki geliştirme ve sensör bağlantı denemeleri.
 - `tools/`: seri porttan hız, ham veri ve mesafe izleme araçları.
 - `reference/stm32-user-code/`: bağımsız STM32 kullanıcı kodu kopyaları.
 - `docs/`: bağlantı, test, hata ayıklama ve kullanım notları.
