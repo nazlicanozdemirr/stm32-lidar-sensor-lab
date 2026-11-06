@@ -1,33 +1,53 @@
 # STM32 LiDAR Sensor Lab
 
-Bu depo; TF02-Pro, TFmini Plus ve SEN0585 LiDAR sensörleriyle yapılan STM32
-I2C/UART bağlantı, veri hızı, mesafe okuma ve hata ayıklama çalışmalarını
-düzenli bir deney arşivinde toplar.
+STM32F446RE experiments for Benewake TF02-Pro and TFmini Plus LiDAR sensors over I²C/UART, with host-side serial diagnostics and a UART bootloader integration study.
 
-## İçerik
+## Retained projects
 
-- `projects/I2CDENEME3/`: LiDAR sürücüleri ile bootloader çalışmalarını
-  birleştiren kapsamlı STM32CubeIDE projesi.
-- `projects/TF02PRO1/`: TF02-Pro deney projesi.
-- `projects/TFMINIPLUS1/`: TFmini Plus deney projesi.
-- `projects/I2CDENEME2/`, `ilk/`, `sensordeneme/`, `sensordeneme2/` ve
-  `sensordeneme3/`: önceki geliştirme ve sensör bağlantı denemeleri.
-- `tools/`: seri porttan hız, ham veri ve mesafe izleme araçları.
-- `reference/stm32-user-code/`: bağımsız STM32 kullanıcı kodu kopyaları.
-- `docs/`: bağlantı, test, hata ayıklama ve kullanım notları.
+- `projects/TF02PRO1/` — TF02-Pro sensor interface.
+- `projects/TFMINIPLUS1/` — TFmini Plus sensor interface.
+- `projects/I2CDENEME3/` — integrated LiDAR experiments and bootloader-related application code.
 
-## Python araçları
+Earlier trial projects and duplicated vendor HAL trees were removed from the active tree. The `.ioc` files, application sources, headers, and linker scripts remain so each project can be regenerated with STM32CubeMX/STM32CubeIDE.
 
-```powershell
+## Host tools
+
+The `tools/` directory contains small serial utilities for:
+
+- monitoring measurement rate;
+- displaying parsed distance samples;
+- inspecting raw serial traffic;
+- collecting detailed timing diagnostics.
+
+Install the host dependency with:
+
+```bash
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+# Windows: .venv\Scripts\activate
+# Linux/macOS: source .venv/bin/activate
 python -m pip install -r requirements.txt
-python .\tools\lidar_rate_monitor.py --help
 ```
 
-Seri port adı, baud hızı, I2C adresi ve sensör çalışma modu kullanılan karta
-göre ayarlanmalıdır. Gerçek donanımı bağlamadan önce sensörün besleme gerilimi
-ve pin haritasını doğrulayın.
+Examples:
 
-STM32CubeIDE projelerinde üretilen `Debug`/`Release` dosyaları ve IDE metadata
-alanları depoya dahil edilmez.
+```bash
+python tools/raw_serial_check.py COM10 9600
+python tools/lidar_rate_monitor.py COM10
+python tools/mesafe_goster.py COM10 9600
+```
+
+## Regenerating an STM32 project
+
+1. Open the selected `.ioc` file in STM32CubeMX or STM32CubeIDE.
+2. Confirm the STM32F446RE target, clock tree, I²C/UART pins, and interrupt configuration.
+3. Regenerate the HAL/CMSIS support files.
+4. Verify that the retained `Core/Inc`, `Core/Src`, and linker files are preserved or merged correctly.
+5. Build and test first on recoverable development hardware.
+
+## Hardware notes
+
+Wiring, test procedures, sensor configuration, and the resistance/serial-number worksheet are retained under `docs/`. They contain bench measurements only; no credentials or access secrets are required by the code.
+
+## Status
+
+The repository records laboratory firmware and validation utilities. Hardware-in-the-loop behavior depends on the exact sensor revision, wiring, power, and CubeMX configuration, so review those parameters before flashing.

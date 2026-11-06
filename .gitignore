@@ -6,6 +6,13 @@ __pycache__/
 **/Release/
 **/build/
 **/.metadata/
+**/.settings/
+**/.cproject
+**/.mxproject
+**/.project
+**/Drivers/
+**/Core/Startup/
+**/*.launch
 *.o
 *.obj
 *.d
